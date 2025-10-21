@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation files('libs/fastcgi-lib.jar')
+}
+
+shadowJar {
+    archiveBaseName.set('app')
+    manifest {
+        attributes(
+                'Main-Class' : 'Main'
+        )
+    }
+    archiveClassifier.set('')
+}
