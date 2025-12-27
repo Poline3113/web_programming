@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>web_lab_3</title>
+    <link rel="stylesheet" href="resources/css/style.css" />
+</h:head>
+<h:body>
+    <table class="main_table">
+        <tr id="header">
+            <td colspan="3">
+                <div class="container">
+                    <table class="info_table">
+                        <tr>
+                            <td>
+                                <p>Группа: P3216</p>
+                            </td>
+                            <td>
+                                <h2>Петрова Полина Алексеевна</h2>
+                            </td>
+                            <td>
+                                <p>Вариант: 321675</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="content">
+                    <table class="data_table">
+                        <tr>
+                            <td>
+                                <div class="container data">
+                                    <h:panelGroup id="table" class="full-width">
+                                        <table class="full-width">
+                                            <tr>
+                                                <td>
+                                                    <h3>Таблица результатов</h3>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table class="results_table" id="results-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>X</th>
+                                                                <th>Y</th>
+                                                                <th>R</th>
+                                                                <th>Результат</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <ui:repeat value="#{daoBean.points}" var="result">
+                                                            <tr>
+                                                                <td>
+                                                                    #{result.x}
+                                                                </td>
+                                                                <td>
+                                                                    #{result.y}
+                                                                </td>
+                                                                <td>
+                                                                    #{result.r}
+                                                                </td>
+                                                                <td>
+                                                                    #{result.message}
+                                                                </td>
+                                                            </tr>
+                                                        </ui:repeat>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </h:panelGroup>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="container data">
+                                    <h:form id="main" class="full-width">
+                                        <table class="input_form full-width">
+                                            <tr>
+                                                <td>
+                                                    <h3>Ввод данных</h3>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Изменение X:</label>
+                                                        <h:panelGrid columns="1" style="margin-bottom: 10px">
+                                                            <p:inputText id="x" value="#{daoBean.x}" pt:placeholder="От -5 до 5" />
+                                                            <p:slider for="x" minValue="-5.0" maxValue="5.0" step="0.1" />
+                                                        </h:panelGrid>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Изменение Y:</label>
+                                                    <h:inputText value="#{daoBean.y}" id="y"
+                                                                 required="true" pt:placeholder="От -3 до 5"
+                                                                 converter="dataConverter">
+                                                        <f:validateDoubleRange minimum="-3.0" maximum="5.0" />
+                                                    </h:inputText>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Изменение R:</label>
+                                                    <h:panelGroup id="rButtonsGroup">
+                                                        <div class="r-buttons-container">
+                                                            <h:commandLink value="1" action="#{daoBean.setR}"
+                                                                           styleClass="r-button #{daoBean.rActive('1') ? 'active' : ''}">
+                                                                <f:param name="rValue" value="1" />
+                                                                <f:ajax render="rButtonsGroup calc_r points" />
+                                                            </h:commandLink>
+
+                                                            <h:commandLink value="2" action="#{daoBean.setR}"
+                                                                           styleClass="r-button #{daoBean.rActive('2') ? 'active' : ''}">
+                                                                <f:param name="rValue" value="2" />
+                                                                <f:ajax render="rButtonsGroup calc_r points" />
+                                                            </h:commandLink>
+
+                                                            <h:commandLink value="3" action="#{daoBean.setR}"
+                                                                           styleClass="r-button #{daoBean.rActive('3') ? 'active' : ''}">
+                                                                <f:param name="rValue" value="3" />
+                                                                <f:ajax render="rButtonsGroup calc_r points" />
+                                                            </h:commandLink>
+
+                                                            <h:commandLink value="4" action="#{daoBean.setR}"
+                                                                           styleClass="r-button #{daoBean.rActive('4') ? 'active' : ''}">
+                                                                <f:param name="rValue" value="4" />
+                                                                <f:ajax render="rButtonsGroup calc_r points" />
+                                                            </h:commandLink>
+
+                                                            <h:commandLink value="5" action="#{daoBean.setR}"
+                                                                           styleClass="r-button #{daoBean.rActive('5') ? 'active' : ''}">
+                                                                <f:param name="rValue" value="5" />
+                                                                <f:ajax render="rButtonsGroup calc_r points" />
+                                                            </h:commandLink>
+                                                        </div>
+                                                    </h:panelGroup>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <h:commandButton value="Проверить" styleClass="result_btn" id="check">
+                                                            <f:ajax listener="#{daoBean.checkHit}"
+                                                                    execute="@form"
+                                                                    render="table points @form" />
+                                                        </h:commandButton>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </h:form>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="container data full-width">
+                                        <table class="full-width">
+                                            <tr>
+                                                <td>
+                                                    <h3>График</h3>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <canvas class="full-width" id="graph"></canvas>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <h:button styleClass="start_btn" value="Вернуться на главную страницу" outcome="go-to-index"/>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div id="error" class="error-message">
+                                                        <span id="errorText"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            <script src="resources/js/main.js"></script>
+
+                            <h:panelGroup id="calc_r">
+                                <h:inputHidden id="r_data" value="#{daoBean.r}" readonly="true"
+                                               data-r-value="#{daoBean.r}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup id="points">
+                                <script type="text/javascript">
+                                        drawPoints('#{daoBean.pointsAsJson}');
+                                </script>
+                            </h:panelGroup>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</h:body>
+</html>
